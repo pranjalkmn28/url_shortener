@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>URL Details</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f0f2f5;
+        }
+        h1 {
+            color: #2c3e50;
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 2.5em;
+        }
+        .details-card {
+            background: linear-gradient(145deg, #e6e9ef, #ffffff);
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.08);
+        }
+        .detail-item {
+            margin-bottom: 20px;
+        }
+        .detail-label {
+            font-weight: bold;
+            color: #34495e;
+            margin-bottom: 5px;
+        }
+        .detail-value {
+            color: #2c3e50;
+            background-color: #ecf0f1;
+            padding: 10px;
+            border-radius: 6px;
+            word-break: break-all;
+        }
+        .short-url {
+            color: #3498db;
+            text-decoration: none;
+            font-weight: bold;
+            transition: color 0.3s ease;
+        }
+        .short-url:hover {
+            color: #2980b9;
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <h1>URL Details</h1>
+    <div class="details-card">
+        {% csrf_token %}
+        <div class="detail-item">
+            <div class="detail-label">Original URL:</div>
+            <div class="detail-value">{{ url.original_url }}</div>
+        </div>
+        <div class="detail-item">
+            <div class="detail-label">Short URL:</div>
+            <div class="detail-value">
+                <a href="{{ url.short_url }}" class="short-url">{{ url.short_url }}</a>
+            </div>
+        </div>
+        <div class="detail-item">
+            <div class="detail-label">Alias:</div>
+            <div class="detail-value">{{ url.alias|default:"N/A" }}</div>
+        </div>
+        <div class="detail-item">
+            <div class="detail-label">Expires in:</div>
+            <div class="detail-value">{{ url.expiry_time }} minutes</div>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,33 @@
+# docker-compose.yml
+version: '3.8'
+
+services:
+  db:
+    image: mysql:8.0
+    restart: always
+    environment:
+      MYSQL_DATABASE: url_shortner
+      MYSQL_USER: pranjal
+      MYSQL_PASSWORD: gupta
+      MYSQL_ROOT_PASSWORD: gupta
+    volumes:
+      - db_data:/var/lib/mysql
+    ports:
+      - "3306:3306"
+    container_name: url_shortner_db
+
+  web:
+    build: .
+    command: sh -c "python manage.py runserver 0.0.0.0:8000"
+    restart: always
+    volumes:
+      - .:/url_shortner
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+    container_name: url_shortner
+    tty: true
+
+volumes:
+  db_data:
